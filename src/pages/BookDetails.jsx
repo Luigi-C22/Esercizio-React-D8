@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import MyNav from "../components/main/MyNav";
+import '../components/main/Card.css';
+import MyFooter from '../components/main/MyFooter';
+
 
 const BookDetails = () => {
-  const { bookId } = useParams();
+  const { asin } = useParams();
   const [book, setBook] = useState(0);
   //console.log(book)
 
   const getBookDetail = async () => {
     try {
-      const response = await fetch(`https://epibooks.onrender.com/${bookId}`);
+      const response = await fetch(`https://epibooks.onrender.com/${asin}`);
       const data = await response.json();
-      setBook(data);
+      setBook(data[0]);
     } catch (error) {
       console.log(error);
     }
@@ -19,27 +25,36 @@ const BookDetails = () => {
 
   useEffect(() => {
     getBookDetail();
-  }, [bookId]);
+  }, [asin]);
 
- 
-  const { asin, title, category, img, price } = book;
+ //console.log(book);
+  /* const {  title, category, img, price } = book; */
   
   return (
-   
-           <Card className="bg-dark text-white">
-          <Card.Img img src={book.img} alt="Card image" />
-          <Card.ImgOverlay>
-          <Card.Title>Title: {book.title}</Card.Title>
-          <Card.Title>Genre: {book.category}</Card.Title>
-          <Card.Title>Price: {book.price}</Card.Title>
+    <>
+      <MyNav />
+
+      
+        <Card className="text-center">
+          <Card.Header>Featured</Card.Header>
+          <Card.Img src={book.img} alt="card image" className="customImg" />
+          <Card.Body>
+            <div>
+              <Card.Title>Title: {book.title}</Card.Title>
+              <Card.Title>Genre: {book.category}</Card.Title>
+              <Card.Title>Price: {book.price}</Card.Title>
+            </div>
             <Card.Text>
-              This is a wider card with supporting text below as a natural lead-in
-              to additional content. This content is a little bit longer.
+              With supporting text below as a natural lead-in to additional content.
             </Card.Text>
-            <Card.Text>Last updated 3 mins ago</Card.Text>
-          </Card.ImgOverlay>
+            <Button as = {Link} to ="/" variant="primary">Home</Button>
+          </Card.Body>
+          <Card.Footer className="text-muted">2 days ago</Card.Footer>
         </Card>
-      );
-    }
+      
+      <MyFooter />
+    </>
+  );
+}
   
 export default BookDetails;

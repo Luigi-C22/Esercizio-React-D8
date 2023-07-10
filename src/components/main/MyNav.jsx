@@ -1,5 +1,5 @@
 import React from 'react';
-//import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
@@ -25,8 +25,8 @@ const NavigationBar = ({ query, setQuery }) => {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="#action1">Home</Nav.Link>
-            <Nav.Link href="#action2">About</Nav.Link>
+            <Nav.Link as = {Link} to ="/">Home</Nav.Link>
+            <Nav.Link as = {Link} to ="Errorpage">About</Nav.Link>
             <NavDropdown title="Browse" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">
                 Fantasy
